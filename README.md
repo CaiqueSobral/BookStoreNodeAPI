@@ -21,7 +21,7 @@ git clone https://github.com/CaiqueSobral/BookStoreNodeAPI.git
 #### 2. Install the project dependencies:
 
 ```bash
-cd book-store-api
+cd BookStoreNodeAPI
 npm install
 ```
 
