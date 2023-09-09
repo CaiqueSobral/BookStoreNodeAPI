@@ -9,8 +9,14 @@ const reviewSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  rating: Number,
-  comment: String,
+  rating: {
+    type: Number,
+    required: true,
+  },
+  comment: {
+    type: String,
+    required: true,
+  },
 });
 
-const Review = mongoose.model('Review', reviewSchema);
+export const Review = mongoose.model('Review', reviewSchema);
