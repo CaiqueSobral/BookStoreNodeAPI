@@ -1,6 +1,15 @@
 import { Request, Response } from 'express';
 import { Book } from '../models/book';
 
+export const getBooks = async (req: Request, res: Response) => {
+  try {
+    const books = await Book.find();
+    res.status(200).json({ books });
+  } catch (error) {
+    res.status(500).send({ error: 'internal server error' });
+  }
+};
+
 export const addBook = async (req: Request, res: Response) => {
   try {
     const { title, author, genre, isbn } = req.body;
