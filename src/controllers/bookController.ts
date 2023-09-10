@@ -84,3 +84,66 @@ export const deleteBook = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getBooksByIsbn = async (req: Request, res: Response) => {
+  try {
+    const isbn = req.params.isbn;
+    const book = await Book.findOne({ isbn }).populate({
+      path: 'reviews',
+      populate: { path: 'userId', select: 'username -_id' },
+      select: '-userId -bookId',
+    });
+
+    if (!book) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
+
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getBooksByAuthor = async (req: Request, res: Response) => {
+  try {
+    const author = decodeURIComponent(req.params.author);
+    const books = await Book.find({
+      author: { $regex: author, $options: 'i' },
+    }).populate({
+      path: 'reviews',
+      populate: { path: 'userId', select: 'username -_id' },
+      select: '-userId -bookId',
+    });
+
+    if (books.length === 0) {
+      return res
+        .status(404)
+        .json({ error: 'No books registered for this author' });
+    }
+
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getBooksByTitle = async (req: Request, res: Response) => {
+  try {
+    const title = decodeURIComponent(req.params.title);
+    const books = await Book.find({
+      title: { $regex: title, $options: 'i' },
+    }).populate({
+      path: 'reviews',
+      populate: { path: 'userId', select: 'username -_id' },
+      select: '-userId -bookId',
+    });
+
+    if (books.length === 0) {
+      return res.status(404).json({ error: 'No books found with this title' });
+    }
+
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
