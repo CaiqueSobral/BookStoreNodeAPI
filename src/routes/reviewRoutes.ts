@@ -20,7 +20,7 @@ reviewRouter.post(
   reviewController.addReviewWithBookId
 );
 reviewRouter.put(
-  '/reviews/:reviewId/books/:bookId',
+  '/reviews/:reviewId',
   verifyToken,
   reviewController.updateReview
 );
