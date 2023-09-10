@@ -48,6 +48,19 @@ export const getAllReviews = async (req: Request, res: Response) => {
   }
 };
 
+export const getReviewById = async (req: Request, res: Response) => {
+  try {
+    const reviewId = req.params.reviewId;
+    const review = await Review.findOne({ _id: reviewId })
+      .populate('bookId', 'title author genre')
+      .populate('userId', 'username -_id');
+
+    res.status(200).json(review);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
 export const updateReview = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;

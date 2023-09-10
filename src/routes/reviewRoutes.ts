@@ -8,6 +8,11 @@ import {
 export const reviewRouter = Router();
 
 reviewRouter.get('/reviews/books', verifyToken, reviewController.getAllReviews);
+reviewRouter.get(
+  '/reviews/books/:reviewId',
+  verifyToken,
+  reviewController.getReviewById
+);
 
 reviewRouter.post(
   '/reviews/books/:bookId',
