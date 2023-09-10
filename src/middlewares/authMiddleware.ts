@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { env } from 'process';
 import jwt from 'jsonwebtoken';
 
 const secretKey: string = `${env.JWT_SECRET_KEY}`;
 
-export function verifyToken(req: Request, res: Response, next: () => void) {
+export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const token = req.header('Authorization');
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
 

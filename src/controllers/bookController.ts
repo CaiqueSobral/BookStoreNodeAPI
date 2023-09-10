@@ -3,7 +3,11 @@ import { Book } from '../models/book';
 
 export const getBooks = async (req: Request, res: Response) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().populate({
+      path: 'reviews',
+      populate: { path: 'userId', select: 'username -_id' },
+      select: '-userId -bookId',
+    });
     res.status(200).json({ books });
   } catch (error) {
     res.status(500).send({ error: 'internal server error' });

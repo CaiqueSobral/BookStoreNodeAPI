@@ -25,8 +25,10 @@ const PORT: number = 3000;
 (async () => {
   try {
     await mongoose.connect(`${env.DB_LINK}`);
-    app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+    app.listen(PORT, () =>
+      console.log(`App listening on http://localhost:${PORT}`)
+    );
   } catch (err) {
-    console.log(err);
+    console.log("Error: Couldn't connect to database");
   }
 })();

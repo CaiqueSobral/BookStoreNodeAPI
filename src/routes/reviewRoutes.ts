@@ -4,8 +4,10 @@ import { verifyToken } from '../middlewares/authMiddleware';
 
 export const reviewRouter = Router();
 
+reviewRouter.get('/books/reviews', verifyToken, reviewController.getAllReviews);
+
 reviewRouter.post(
-  '/books/:id/reviews',
+  '/books/:bookId/reviews',
   verifyToken,
   reviewController.addReviewWithBookId
 );

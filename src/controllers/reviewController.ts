@@ -1,9 +1,15 @@
 import { Request, Response } from 'express';
 import { Review } from '../models/review';
+import { Book } from '../models/book';
 
 export const addReviewWithBookId = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.id;
+
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
 
     const { userId, rating, comment } = req.body;
 
@@ -22,9 +28,23 @@ export const addReviewWithBookId = async (req: Request, res: Response) => {
     });
 
     await newReview.save();
+    await Book.findByIdAndUpdate(bookId, { $push: { reviews: newReview._id } });
+
     res.status(201).json(newReview);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getAllReviews = async (req: Request, res: Response) => {
+  try {
+    const reviews = await Review.find()
+      .populate('bookId', 'title author genre')
+      .populate('userId', 'username -_id');
+
+    res.status(200).json(reviews);
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
@@ -32,7 +52,7 @@ export const updateReview = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;
     const reviewId = req.params.reviewId;
-    const userId = req.body.userId; // You can obtain this from the JWT token
+    const userId = req.body.userId;
 
     const updatedReview = await Review.findOneAndUpdate(
       { _id: reviewId, bookId, userId },
@@ -54,7 +74,7 @@ export const deleteReview = async (req: Request, res: Response) => {
   try {
     const bookId = req.params.bookId;
     const reviewId = req.params.reviewId;
-    const userId = req.body.userId; // You can obtain this from the JWT token
+    const userId = req.body.userId;
 
     const deletedReview = await Review.findOneAndRemove({
       _id: reviewId,
