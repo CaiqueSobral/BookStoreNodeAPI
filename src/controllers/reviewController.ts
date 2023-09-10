@@ -63,12 +63,11 @@ export const getReviewById = async (req: Request, res: Response) => {
 
 export const updateReview = async (req: Request, res: Response) => {
   try {
-    const bookId = req.params.bookId;
     const reviewId = req.params.reviewId;
     const userId = req.body.userId;
 
     const updatedReview = await Review.findOneAndUpdate(
-      { _id: reviewId, bookId, userId },
+      { _id: reviewId, userId },
       { rating: req.body.rating, comment: req.body.comment },
       { new: true }
     );
