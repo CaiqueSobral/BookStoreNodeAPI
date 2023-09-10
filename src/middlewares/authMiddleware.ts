@@ -27,7 +27,7 @@ export async function authorizeReviewDelete(
 
     const decodedToken = jwt.verify(token, secretKey) as JwtPayload;
 
-    const userId = decodedToken.userId;
+    const userId = decodedToken.id;
     const reviewId = req.params.reviewId;
 
     const review = await Review.findById(reviewId);
