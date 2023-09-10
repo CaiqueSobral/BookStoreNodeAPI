@@ -9,7 +9,7 @@ export const reviewRouter = Router();
 
 reviewRouter.get('/reviews/books', verifyToken, reviewController.getAllReviews);
 reviewRouter.get(
-  '/reviews/books/:reviewId',
+  '/reviews/:reviewId',
   verifyToken,
   reviewController.getReviewById
 );
