@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as reviewController from '../controllers/reviewController';
+import * as reviewController from '../controllers/reviewController.ts';
 import {
   authorizeReviewDelete,
   verifyToken,
-} from '../middlewares/authMiddleware';
+} from '../middlewares/authMiddleware.ts';
 
 export const reviewRouter = Router();
 

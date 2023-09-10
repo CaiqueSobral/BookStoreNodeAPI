@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import { env } from 'process';
 import dotenv from 'dotenv';
-import { router } from './routes';
+import { router } from './routes.ts';
 
 const app = express();
 dotenv.config();
@@ -22,13 +22,12 @@ app.use((_, res: Response, next: NextFunction) => {
 app.use('/api', router);
 
 const PORT: number = 3000;
-(async () => {
-  try {
-    await mongoose.connect(`${env.DB_LINK}`);
-    app.listen(PORT, () =>
-      console.log(`App listening on http://localhost:${PORT}`)
-    );
-  } catch (err) {
-    console.log("Error: Couldn't connect to database");
-  }
-})();
+
+try {
+  await mongoose.connect(`${env.DB_LINK}`);
+  app.listen(PORT, () =>
+    console.log(`App listening on http://localhost:${PORT}`)
+  );
+} catch (err) {
+  console.log("Error: Couldn't connect to database");
+}

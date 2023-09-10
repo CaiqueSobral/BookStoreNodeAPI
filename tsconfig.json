@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "es2017",
     "lib": ["es6"],
-    "module": "commonjs" /* Specify what module code is generated. */,
+    "module": "NodeNext" /* Specify what module code is generated. */,
     "rootDir": "src",
     "resolveJsonModule": true,
-    "allowJs": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "outDir": "build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

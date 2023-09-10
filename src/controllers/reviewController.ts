@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Review } from '../models/review';
-import { Book } from '../models/book';
+import { Review } from '../models/review.ts';
+import { Book } from '../models/book.ts';
 
 export const addReviewWithBookId = async (req: Request, res: Response) => {
   try {

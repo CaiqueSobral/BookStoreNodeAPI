@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { env } from 'process';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { Review } from '../models/review';
+import { Review } from '../models/review.ts';
 
 const secretKey: string = `${env.JWT_SECRET_KEY}`;
 

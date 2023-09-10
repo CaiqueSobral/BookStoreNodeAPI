@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import * as bookController from '../controllers/bookController';
-import { verifyToken } from '../middlewares/authMiddleware';
+import * as bookController from '../controllers/bookController.ts';
+import { verifyToken } from '../middlewares/authMiddleware.ts';
 
 export const bookRouter = Router();
 
