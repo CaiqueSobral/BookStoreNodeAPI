@@ -4,7 +4,7 @@ import { Book } from '../models/book';
 
 export const addReviewWithBookId = async (req: Request, res: Response) => {
   try {
-    const bookId = req.params.id;
+    const bookId = req.params.bookId;
 
     const book = await Book.findById(bookId);
     if (!book) {
@@ -72,14 +72,10 @@ export const updateReview = async (req: Request, res: Response) => {
 
 export const deleteReview = async (req: Request, res: Response) => {
   try {
-    const bookId = req.params.bookId;
     const reviewId = req.params.reviewId;
-    const userId = req.body.userId;
 
     const deletedReview = await Review.findOneAndRemove({
       _id: reviewId,
-      bookId,
-      userId,
     });
 
     if (!deletedReview) {

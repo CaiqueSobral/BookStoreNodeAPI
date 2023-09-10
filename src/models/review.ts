@@ -8,7 +8,6 @@ const reviewSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    select: false,
   },
   rating: {
     type: Number,

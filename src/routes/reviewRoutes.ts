@@ -1,23 +1,26 @@
 import { Router } from 'express';
 import * as reviewController from '../controllers/reviewController';
-import { verifyToken } from '../middlewares/authMiddleware';
+import {
+  authorizeReviewDelete,
+  verifyToken,
+} from '../middlewares/authMiddleware';
 
 export const reviewRouter = Router();
 
-reviewRouter.get('/books/reviews', verifyToken, reviewController.getAllReviews);
+reviewRouter.get('/reviews/books', verifyToken, reviewController.getAllReviews);
 
 reviewRouter.post(
-  '/books/:bookId/reviews',
+  '/reviews/books/:bookId',
   verifyToken,
   reviewController.addReviewWithBookId
 );
 reviewRouter.put(
-  '/books/:bookId/reviews/:reviewId',
+  '/reviews/:reviewId/books/:bookId',
   verifyToken,
   reviewController.updateReview
 );
 reviewRouter.delete(
-  '/books/:bookId/reviews/:reviewId',
-  verifyToken,
-  reviewController.addReviewWithBookId
+  '/reviews/:reviewId',
+  [verifyToken, authorizeReviewDelete],
+  reviewController.deleteReview
 );
